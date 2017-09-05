@@ -1,7 +1,8 @@
 package controllers;
 
-import api.ReceiptResponse;
 import dao.TagDao;
+import api.ReceiptResponse;
+import generated.tables.records.TagsRecord;
 import generated.tables.records.ReceiptsRecord;
 
 import javax.validation.Valid;
@@ -26,5 +27,11 @@ public class TagController {
     public void toggleTag(@PathParam("tag") String tagName, int receiptId ){
         tags.write(tagName, receiptId);
         return;
+    }
+
+    @GET
+    public List<ReceiptResponse> getTag(@PathParam("tag") String tagName){
+        List<ReceiptsRecord> results =  tags.fetchReceiptsByTag(tagName);
+        return results.stream().map(ReceiptResponse::new).collect(toList());
     }
 }
