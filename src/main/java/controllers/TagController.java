@@ -1,7 +1,7 @@
 package controllers;
 
 import dao.TagDao;
-import api.ReceiptResponse;
+import api.TagResponse;
 import generated.tables.records.TagsRecord;
 import generated.tables.records.ReceiptsRecord;
 
@@ -30,8 +30,8 @@ public class TagController {
     }
 
     @GET
-    public List<ReceiptResponse> getTag(@PathParam("tag") String tagName){
+    public List<TagResponse> getTag(@PathParam("tag") String tagName){
         List<ReceiptsRecord> results =  tags.fetchReceiptsByTag(tagName);
-        return results.stream().map(ReceiptResponse::new).collect(toList());
+        return results.stream().map(TagResponse::new).collect(toList());
     }
 }
