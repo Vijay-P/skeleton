@@ -45,7 +45,6 @@ function putTag(id, tag, element) {
         data: id
     }).done(function(data) {
         $(element).remove();
-        $(this).prop("disabled", false);
     });
 }
 
@@ -96,6 +95,7 @@ $(document).ready(function() {
             putTag(id, tag, this);
             var tagstring = `<button receipt_id="${id}" class="tag button"><span class="tagValue">${tag}</span> [x]</button>`;
             $(this).parent().append(tagstring);
+            $(this).parent.children(".add-tag").prop("disabled", false);
         }
     });
 });
