@@ -1,24 +1,30 @@
-// const api = "http://ec2-54-89-97-105.compute-1.amazonaws.com:8080";
-const api = "localhost:8080";
+const api = "http://ec2-54-89-97-105.compute-1.amazonaws.com:8080";
+// const api = "localhost:8080";
 
+function prepTags(id, tags) {
+    var tagstring = "";
+    for (var i = 0; i < tags.length; i++) {
+        tagstring += `<button receipt_id="${id}" class="tag button"><span class="tagValue">${tags[i]}</span> [x]</button>`;
+    }
+    return tagstring;
+}
 
 function prepReceipt(receipt) {
     return `<tr class="receipt" id="${receipt.id}">
         <td class="time">${receipt.created.slice(0, 5)}</td>
         <td class="merchant">${receipt.merchantName}</td>
         <td class="amount">$${receipt.value}</td>
-        <td class="tags">${receipt.tags}</td>
+        <td class="tags">${prepTags(receipt.id, receipt.tags)}
+            <button receipt_id="${receipt.id}" class="add-tag button-primary .u-pull-right">Add +</button>
+        </td>
     </tr>`;
 }
 
 function loadReceipts() {
-    console.log("loading");
     $("#receiptList").empty();
     $.getJSON(api + "/receipts", function(receipts) {
-        console.log(receipts);
         for (var i = 0; i < receipts.length; i++) {
             var rectemp = prepReceipt(receipts[i]);
-            console.log(rectemp);
             $("#receiptList").append(rectemp);
         }
     })
@@ -28,6 +34,19 @@ function clearHide() {
     $("#add-form").toggle();
     $("#merchant").val("");
     $("#amount").val("");
+}
+
+function putTag(id, tag, element) {
+    $.ajax({
+        url: api + '/tags/' + tag,
+        type: 'PUT',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: id
+    }).done(function(data) {
+        $(element).remove();
+        $(this).prop("disabled", false);
+    });
 }
 
 $(document).ready(function() {
@@ -44,7 +63,7 @@ $(document).ready(function() {
             merchant: $("#merchant").val(),
             amount: parseInt($("#amount").val())
         }));
-        var y = $.ajax({
+        $.ajax({
             url: api + '/receipts',
             type: 'POST',
             dataType: 'json',
@@ -58,5 +77,25 @@ $(document).ready(function() {
             loadReceipts();
         });
         console.log(y)
+    });
+    $(document).on("click", '.tag', function(event) {
+        var tagname = $(this).text().slice(0, -4);
+        console.log($(this).attr("receipt_id"), tagname);
+        putTag($(this).attr("receipt_id"), tagname, this);
+    });
+    $(document).on("click", '.add-tag', function(event) {
+        $(this).prop("disabled", true);
+        var id = $(this).attr("receipt_id");
+        var input = `<input receipt_id=${id} class="tag_input" type="text" placeholder="tag" name="tag">`;
+        $(this).parent().append(input);
+    });
+    $(document).on('keyup', ".tag_input", function(e) {
+        if (e.keyCode == 13) {
+            var id = $(this).attr("receipt_id");
+            var tag = $(this).val();
+            putTag(id, tag, this);
+            var tagstring = `<button receipt_id="${id}" class="tag button"><span class="tagValue">${tag}</span> [x]</button>`;
+            $(this).parent().append(tagstring);
+        }
     });
 });

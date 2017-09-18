@@ -13,7 +13,7 @@ public class StaticHtmlController {
 
     @GET
     public String getIndexPage() throws IOException {
-        Resources.getResource("website/index.html");
-        return Resources.toString(Resources.getResource("website/index.html"), UTF_8);
+        Resources.getResource("index.html");
+        return Resources.toString(Resources.getResource("index.html"), UTF_8);
     }
 }

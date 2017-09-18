@@ -1,8 +1,8 @@
 #rectitle{
     display: inline-block;
 }
-#addbutton{
-    margin-top: 1px;
+#add-receipt{
+    margin-top: 3px;
     display: inline-block;
 }
 #appheader{
@@ -10,4 +10,11 @@
 }
 #formbuttons{
     float: right;
+}
+.tag .add-tag{
+    margin: 0px;
+    display: inline-block;
+}
+.tags{
+    max-width: 50%
 }
