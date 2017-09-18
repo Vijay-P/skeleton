@@ -1051,7 +1051,7 @@
             return `<tr class="receipt" id="${receipt.id}">
             <td class="time">${receipt.created.slice(0, 5)}</td>
             <td class="merchant">${receipt.merchantName}</td>
-            <td class="amount">$${receipt.value}</td>
+            <td>$<span class="amount">${receipt.value}</span></td>
             <td class="tags">${prepTags(receipt.id, receipt.tags)}
                 <button receipt_id="${receipt.id}" class="add-tag button-primary .u-pull-right">Add +</button>
             </td>
