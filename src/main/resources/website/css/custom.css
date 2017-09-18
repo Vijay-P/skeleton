@@ -1,0 +1,13 @@
+#rectitle{
+    display: inline-block;
+}
+#addbutton{
+    margin-top: 1px;
+    display: inline-block;
+}
+#appheader{
+    display: inline;
+}
+#formbuttons{
+    float: right;
+}

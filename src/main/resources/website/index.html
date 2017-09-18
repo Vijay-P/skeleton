@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Your page title here :)</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- JavaScript
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/pagedynamics.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div class="container">
+        <div class="one column"></div>
+        <div class="ten columns">
+            <div class="row" id="appheader">
+                <h3 id="rectitle">My Receipts</h3>
+                <button id="add-receipt" class="button-primary u-pull-right">+</button>
+            </div>
+            <div id="add-form">
+                <form id="post-receipt">
+                    <div class="row">
+                        <label for="merchant">Merchant</label>
+                        <input class="u-full-width" type="text" placeholder="merchant name" id="merchant" name="merchant">
+                    </div>
+                    <div class="row">
+                        <label for="amount">Amount</label>
+                        <input class="u-full-width" type="number" placeholder="amount" id="amount" name="amount">
+                    </div>
+                    <div class="row">
+                        <div id="formbuttons">
+                            <input id="cancel-receipt" class="button" type="button" value="Cancel">
+                            <input id="save-receipt" class="button-primary" type="button" value="Save">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <table class="u-full-width">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Merchant</th>
+                        <th>Amount</th>
+                        <th>Tags</th>
+                    </tr>
+                </thead>
+                <tbody id="receiptList">
+                </tbody>
+            </table>
+        </div>
+        <div class="one column"></div>
+    </div>
+
+    <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>

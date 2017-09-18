@@ -72,4 +72,16 @@ public class TagDao {
                 .fetchInto(ReceiptsRecord.class);
         return receipts;
     }
+
+    public List<String> fetchTagsByReceipts(Integer id) {
+        List<String> receipts = dsl
+                .select()
+                .from(TAGS)
+                .join(RECEIPTS)
+                .on(RECEIPTS.ID.eq(TAGS.RECEIPT_ID))
+                .where(TAGS.RECEIPT_ID.eq(id))
+                .and(RECEIPTS.ID.eq(TAGS.RECEIPT_ID))
+                .fetch(TAGS.TAG);
+        return receipts;
+    }
 }
