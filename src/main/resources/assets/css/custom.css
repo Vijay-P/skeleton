@@ -34,14 +34,6 @@ video {
     border: 0px;
 }
 
-#vidwrap {
-    margin: 5px 0;
-}
-
-#take-pic{
-    display: block;
-}
-
 /*loader from https://www.w3schools.com/howto/howto_css_loader.asp*/
 
 .loader {

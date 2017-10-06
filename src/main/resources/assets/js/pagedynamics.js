@@ -62,7 +62,7 @@ $(document).ready(function() {
         if ($("#cam").is(":visible") && videoEnabled == false) {
             startVideo();
             $("#vidwrap").css("margin-left", ($(window).width() - $("video").width()) / 4);
-            $("#take-pic").css("margin-left", ($("video").width() - $("#take-pic").width()) / 8);
+            $("#take-pic").css("margin-left", ($("video").width() - $("#take-pic-cancel").width() - $("#take-pic").width()) / 12);
             $(".loader").css("margin-left", Math.abs($("video").width() - $(".loader").width()) / 4);
             $(".loader").css("margin-top", Math.abs($("video").height() - $(".loader").height()) / 2);
         }
@@ -114,6 +114,9 @@ $(document).ready(function() {
     $('#take-pic').click(function() {
         $(".loader").toggle();
         takeSnapshot();
+    });
+    $("#take-pic-cancel").click(function() {
+        $("#cam").toggle();
     });
 });
 
