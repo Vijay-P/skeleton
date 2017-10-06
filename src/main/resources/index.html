@@ -43,15 +43,16 @@
             <div class="row" id="appheader">
                 <h3 id="rectitle">My Receipts</h3>
                 <button id="add-receipt" class="button-primary u-pull-right">+</button>
-                <button id="start" class="button-primary u-pull-right fa fa-camera"></button>
+                <button id="start-camera" class="button-primary u-pull-right fa fa-camera"></button>
             </div>
 
             <div id="cam">
-
                 <div class="row">
                     <div id="vidwrap">
+                        <div class="loader"></div>
                         <video autoplay></video>
-                        <button id="snapshot" class="button-primary" disabled="true">Take a Snapshot!</button>
+                        <button id="take-pic-cancel" class="button" disabled="true">Cancel</button>
+                        <button id="take-pic" class="button-primary" disabled="true">Snap</button>
                     </div>
                 </div>
             </div>
@@ -64,7 +65,7 @@
                     </div>
                     <div class="row">
                         <label for="amount">Amount</label>
-                        <input class="u-full-width" type="number" placeholder="amount" id="amount" name="amount">
+                        <input class="u-full-width" type="number" step="any" placeholder="amount" id="amount" name="amount">
                     </div>
                     <div class="row">
                         <div id="formbuttons">

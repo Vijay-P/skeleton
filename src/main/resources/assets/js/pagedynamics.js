@@ -53,15 +53,18 @@ $(document).ready(function() {
     loadReceipts();
     $("#add-form").toggle();
     $("#cam").toggle();
-    $("#vidwrap").css("margin-left", ($(window).width() - $("video").width()) / 4);
-    $("#snapshot").css("margin-left", ($("#vidwrap").width() - $("#snapshot").width()) / 2);
-    $("#start").click(function() {
+    $(".loader").toggle();
+    $("#start_camera").click(function() {
         if ($("#add-form").is(":visible")) {
             $("#add-form").toggle();
         }
         $("#cam").toggle();
         if ($("#cam").is(":visible") && videoEnabled == false) {
             startVideo();
+            $("#vidwrap").css("margin-left", ($(window).width() - $("video").width()) / 4);
+            $("#take-pic").css("margin-left", ($("video").width() - $("#take-pic").width()) / 8);
+            $(".loader").css("margin-left", Math.abs($("video").width() - $(".loader").width()) / 4);
+            $(".loader").css("margin-top", Math.abs($("video").height() - $(".loader").height()) / 2);
         }
     });
     $("#add-receipt").click(function() {
@@ -81,7 +84,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify({
                 merchant: $("#merchant").val(),
-                amount: parseInt($("#amount").val())
+                amount: parseFloat($("#amount").val())
             })
         }).done(function(data) {
             clearHide();
@@ -108,7 +111,8 @@ $(document).ready(function() {
             $(this).parent().children(".add-tag").prop("disabled", false);
         }
     });
-    $('#snapshot').click(function() {
+    $('#take-pic').click(function() {
+        $(".loader").toggle();
         takeSnapshot();
     });
 });
@@ -165,6 +169,7 @@ function takeSnapshot() {
                     success: function() {},
                 })
                 .then(response => {
+                    $(".loader").toggle();
                     $("#cam").toggle();
                     $("#add-form").toggle();
                     var r_response = JSON.parse(JSON.stringify(response));
@@ -182,5 +187,5 @@ function takeSnapshot() {
 
 
 $(function() {
-    $('video').on('play', () => $('#snapshot').prop('disabled', false));
+    $('video').on('play', () => $('#take-pic').prop('disabled', false));
 });
