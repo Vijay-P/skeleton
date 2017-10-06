@@ -998,7 +998,7 @@
     </style>
 
     <style>
-        #rectitle {
+    #rectitle {
             display: inline-block;
         }
 
@@ -1024,11 +1024,21 @@
             max-width: 50%
         }
 
-        .video {
+        video {
             width: 550px;
             height: 450px;
             border: 1px solid black;
         }
+
+        #vidwrap {
+            margin: 20px 0;
+        }
+
+        #start,
+        #snapshot {
+            height: 3em;
+        }
+    }
     </style>
 
     <!-- Favicon
@@ -1209,6 +1219,12 @@
 
 <body>
     <div class="container">
+        <button id="start">Start Video</button>
+        <button id="snapshot" disabled="true">Take a Snapshot!</button>
+        <br>
+        <div id="vidwrap">
+            <video autoplay></video>
+        </div>
         <div class="one column"></div>
         <div class="ten columns">
             <div class="row" id="appheader">
@@ -1248,12 +1264,6 @@
         </div>
         <div class="one column"></div>
     </div>
-    <!-- <button id="start">Start Video</button>
-        <button id="snapshot" disabled="true">Take a Snapshot!</button>
-        <br>
-        <div id="vidwrap">
-            <video autoplay></video>
-        </div> -->
 </body>
 
 </html>
