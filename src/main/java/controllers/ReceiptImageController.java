@@ -48,15 +48,20 @@ public class ReceiptImageController {
             String merchantName = null;
             BigDecimal amount = null;
 
-            // Your Algo Here!!
             // Sort text annotations by bounding polygon.  Top-most non-decimal text is the merchant
             // bottom-most decimal text is the total amount
-            for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-                out.printf("Position : %s\n", annotation.getBoundingPoly());
-                out.printf("Text: %s\n", annotation.getDescription());
+            String myReceipt = res.getTextAnnotationsList().get(0).getDescription();
+            String lines[] = myReceipt.split("\\r?\\n");
+            merchantName = lines[0];
+            for(int i = 0; i < lines.length; i++){
+                try{
+                    amount = new BigDecimal(lines[i]);
+                }
+                catch(java.lang.NumberFormatException e){
+                    continue;
+                }
             }
 
-            //TextAnnotation fullTextAnnotation = res.getFullTextAnnotation();
             return new ReceiptSuggestionResponse(merchantName, amount);
         }
     }

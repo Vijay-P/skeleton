@@ -110,8 +110,6 @@ $(document).ready(function() {
     });
     $('#snapshot').click(function() {
         takeSnapshot();
-        $("#cam").toggle();
-        $("#add-form").toggle();
     });
 });
 
@@ -167,9 +165,12 @@ function takeSnapshot() {
                     success: function() {},
                 })
                 .then(response => {
+                    $("#cam").toggle();
+                    $("#add-form").toggle();
                     var r_response = JSON.parse(JSON.stringify(response));
-                    $("#merchant").value = r_response.merchantName;
-                    $("#amount").value = r_response.amount;
+                    $("#merchant").val(r_response.merchantName);
+                    $("#amount").val(r_response.amount);
+                    console.log(r_response.amount);
                 })
                 .always(() => console.log('request complete'));
 
