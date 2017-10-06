@@ -53,9 +53,12 @@ $(document).ready(function() {
     loadReceipts();
     $("#add-form").toggle();
     $("#cam").toggle();
-    $("#vidwrap").css("margin-left", ($(window).width() - $("#video").width()) / 4);
+    $("#vidwrap").css("margin-left", ($(window).width() - $("video").width()) / 4);
     $("#snapshot").css("margin-left", ($("#vidwrap").width() - $("#snapshot").width()) / 2);
     $("#start").click(function() {
+        if ($("#add-form").is(":visible")) {
+            $("#add-form").toggle();
+        }
         $("#cam").toggle();
         if ($("#cam").is(":visible") && videoEnabled == false) {
             startVideo();
@@ -63,6 +66,9 @@ $(document).ready(function() {
     });
     $("#add-receipt").click(function() {
         $("#add-form").toggle();
+        if ($("#cam").is(":visible")) {
+            $("#cam").toggle();
+        }
     });
     $("#cancel-receipt").click(function() {
         clearHide();
@@ -101,6 +107,11 @@ $(document).ready(function() {
             $(this).parent().append(tagstring);
             $(this).parent().children(".add-tag").prop("disabled", false);
         }
+    });
+    $('#snapshot').click(function() {
+        takeSnapshot();
+        $("#cam").toggle();
+        $("#add-form").toggle();
     });
 });
 
@@ -156,7 +167,9 @@ function takeSnapshot() {
                     success: function() {},
                 })
                 .then(response => {
-                    $('video').after(`<div>got response: <pre>${JSON.stringify(response)}</pre></div>`);
+                    var r_response = JSON.parse(JSON.stringify(response));
+                    $("#merchant").value = r_response.merchantName;
+                    $("#amount").value = r_response.amount;
                 })
                 .always(() => console.log('request complete'));
 
@@ -169,5 +182,4 @@ function takeSnapshot() {
 
 $(function() {
     $('video').on('play', () => $('#snapshot').prop('disabled', false));
-    $('#snapshot').on('click', takeSnapshot);
 });

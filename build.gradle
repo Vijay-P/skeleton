@@ -54,6 +54,8 @@ dependencies {
     compile 'io.dropwizard:dropwizard-core:1.2.0-rc2'   // Great implementation of many basic Java Server libs
     compile 'io.dropwizard:dropwizard-db:1.2.0-rc2'     // Provides manages data sources
 
+    compile 'io.dropwizard:dropwizard-assets:1.2.0-rc2' //Serve Static Assets
+
     compile 'org.jooq:jooq:3.9.5'                       // DSL for SQL in java
     compile 'com.h2database:h2:1.4.196'                 // in-memory SQL. we'll upgrade to mysql later
 
