@@ -49,49 +49,52 @@
             <div id="cam">
                 <div class="row">
                     <div id="vidwrap">
-                        <div class="loader"></div>
-                        <video autoplay></video>
+                        <div class="row">
+                            <div class="loader"></div>
+                            <video autoplay></video>
+                        </div <div class="row ">
                         <button id="take-pic-cancel" class="button" disabled="true">Cancel</button>
                         <button id="take-pic" class="button-primary" disabled="true">Snap</button>
                     </div>
                 </div>
             </div>
-
-            <div id="add-form">
-                <form id="post-receipt">
-                    <div class="row">
-                        <label for="merchant">Merchant</label>
-                        <input class="u-full-width" type="text" placeholder="merchant name" id="merchant" name="merchant">
-                    </div>
-                    <div class="row">
-                        <label for="amount">Amount</label>
-                        <input class="u-full-width" type="number" step="any" placeholder="amount" id="amount" name="amount">
-                    </div>
-                    <div class="row">
-                        <div id="formbuttons">
-                            <input id="cancel-receipt" class="button" type="button" value="Cancel">
-                            <input id="save-receipt" class="button-primary" type="button" value="Save">
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <table class="u-full-width">
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>Merchant</th>
-                        <th>Amount</th>
-                        <th>Tags</th>
-                    </tr>
-                </thead>
-                <tbody id="receiptList">
-                </tbody>
-            </table>
-
         </div>
 
-        <div class="one column"></div>
+        <div id="add-form">
+            <form id="post-receipt">
+                <div class="row">
+                    <label for="merchant">Merchant</label>
+                    <input class="u-full-width" type="text" placeholder="merchant name" id="merchant" name="merchant">
+                </div>
+                <div class="row">
+                    <label for="amount">Amount</label>
+                    <input class="u-full-width" type="number" step="any" placeholder="amount" id="amount" name="amount">
+                </div>
+                <div class="row">
+                    <div id="formbuttons">
+                        <input id="cancel-receipt" class="button" type="button" value="Cancel">
+                        <input id="save-receipt" class="button-primary" type="button" value="Save">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Merchant</th>
+                    <th>Amount</th>
+                    <th>Tags</th>
+                </tr>
+            </thead>
+            <tbody id="receiptList">
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="one column"></div>
     </div>
 
 </body>

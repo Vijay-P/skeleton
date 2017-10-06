@@ -54,7 +54,7 @@ $(document).ready(function() {
     $("#add-form").toggle();
     $("#cam").toggle();
     $(".loader").toggle();
-    $("#start_camera").click(function() {
+    $("#start-camera").click(function() {
         if ($("#add-form").is(":visible")) {
             $("#add-form").toggle();
         }
