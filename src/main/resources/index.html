@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
@@ -1024,6 +1023,12 @@
         .tags {
             max-width: 50%
         }
+
+        .video {
+            width: 550px;
+            height: 450px;
+            border: 1px solid black;
+        }
     </style>
 
     <!-- Favicon
@@ -1033,6 +1038,7 @@
     <!-- JavaScript
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script data-require="jquery@*" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
     <!-- <script src="js/pagedynamics.js"></script> -->
     <script>
         // const api = "http://ec2-54-89-97-105.compute-1.amazonaws.com:8080";
@@ -1132,13 +1138,76 @@
             });
         });
     </script>
+    <script>
+        let imageCapture;
+        let track;
 
+        function attachMediaStream(mediaStream) {
+            $('video')[0].srcObject = mediaStream;
+
+            // Saving the track allows us to capture a photo
+            track = mediaStream.getVideoTracks()[0];
+            imageCapture = new ImageCapture(track);
+        }
+
+        function startVideo() {
+            navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: {
+                            exact: "environment"
+                        }
+                    }
+                })
+                .then(attachMediaStream)
+                .catch(error => {
+                    navigator.mediaDevices.getUserMedia({
+                            video: true
+                        })
+                        .then(attachMediaStream)
+                        .catch(error => {
+                            console.log('you are fooked');
+                        })
+                })
+        }
+
+        function takeSnapshot() {
+            // create a CANVAS element that is same size as the image
+            imageCapture.grabFrame()
+                .then(img => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    canvas.getContext('2d').drawImage(img, 0, 0);
+                    const base64EncodedImageData = canvas.toDataURL('image/png').split(',')[1];
+                    $.ajax({
+                            url: "/images",
+                            type: "POST",
+                            data: base64EncodedImageData,
+                            contentType: "text/plain",
+                            success: function() {},
+                        })
+                        .then(response => {
+                            $('video').after(`<div>got response: <pre>${JSON.stringify(response)}</pre></div>`);
+                        })
+                        .always(() => console.log('request complete'));
+
+                    // For debugging, you can uncomment this to see the frame that was captured
+                    // $('BODY').append(canvas);
+                });
+
+        }
+
+
+        $(function() {
+            $('#start').on('click', startVideo);
+            $('video').on('play', () => $('#snapshot').prop('disabled', false));
+            $('#snapshot').on('click', takeSnapshot);
+        });
+    </script>
 </head>
 
 <body>
-
-    <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div class="container">
         <div class="one column"></div>
         <div class="ten columns">
@@ -1179,9 +1248,12 @@
         </div>
         <div class="one column"></div>
     </div>
-
-    <!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <!-- <button id="start">Start Video</button>
+        <button id="snapshot" disabled="true">Take a Snapshot!</button>
+        <br>
+        <div id="vidwrap">
+            <video autoplay></video>
+        </div> -->
 </body>
 
 </html>
