@@ -8,6 +8,10 @@
     display: inline-block;
 }
 
+#start{
+    margin-right: 5px;
+}
+
 #appheader {
     display: inline;
 }
@@ -25,11 +29,15 @@
     max-width: 50%
 }
 video {
-    width: 550px;
-    height: 450px;
-    border: 1px solid black;
+    margin: auto;
+    height: 30vh;
+    border: 0px;
 }
 
 #vidwrap {
-    margin: 20px 0;
+    margin: 5px 0;
+}
+
+#snapshot{
+    display: block;
 }

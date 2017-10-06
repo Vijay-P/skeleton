@@ -52,6 +52,15 @@ function putTag(id, tag, element) {
 $(document).ready(function() {
     loadReceipts();
     $("#add-form").toggle();
+    $("#cam").toggle();
+    $("#vidwrap").css("margin-left", ($(window).width() - $("#video").width()) / 4);
+    $("#snapshot").css("margin-left", ($("#vidwrap").width() - $("#snapshot").width()) / 2);
+    $("#start").click(function() {
+        $("#cam").toggle();
+        if ($("#cam").is(":visible") && videoEnabled == false) {
+            startVideo();
+        }
+    });
     $("#add-receipt").click(function() {
         $("#add-form").toggle();
     });
@@ -98,7 +107,10 @@ $(document).ready(function() {
 let imageCapture;
 let track;
 
+let videoEnabled = false;
+
 function attachMediaStream(mediaStream) {
+    videoEnabled = true;
     $('video')[0].srcObject = mediaStream;
 
     // Saving the track allows us to capture a photo
@@ -149,14 +161,13 @@ function takeSnapshot() {
                 .always(() => console.log('request complete'));
 
             // For debugging, you can uncomment this to see the frame that was captured
-            $('BODY').append(canvas);
+            // $('BODY').append(canvas);
         });
 
 }
 
 
 $(function() {
-    $('#start').on('click', startVideo);
     $('video').on('play', () => $('#snapshot').prop('disabled', false));
     $('#snapshot').on('click', takeSnapshot);
 });

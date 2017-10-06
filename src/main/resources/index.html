@@ -25,7 +25,7 @@
 
     <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
 
     <!-- JavaScript
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -37,37 +37,45 @@
 <body>
     <div class="container">
         <div class="one column"></div>
+
         <div class="ten columns">
+
             <div class="row" id="appheader">
                 <h3 id="rectitle">My Receipts</h3>
                 <button id="add-receipt" class="button-primary u-pull-right">+</button>
                 <button id="start" class="button-primary u-pull-right fa fa-camera"></button>
             </div>
-            <div id="camdiv">
-                <div id="vidwrap">
-                    <video autoplay></video>
+
+            <div id="cam">
+
+                <div class="row">
+                    <div id="vidwrap">
+                        <video id="video" autoplay></video>
+                        <button id="snapshot" class="button-primary" disabled="true">Take a Snapshot!</button>
+                    </div>
                 </div>
-                <button id="snapshot" disabled="true">Take a Snapshot!</button>
             </div>
-            <div id=" add-form ">
-                <form id="post-receipt ">
-                    <div class="row ">
-                        <label for="merchant ">Merchant</label>
-                        <input class="u-full-width " type="text " placeholder="merchant name " id="merchant " name="merchant ">
+
+            <div id="add-form">
+                <form id="post-receipt">
+                    <div class="row">
+                        <label for="merchant">Merchant</label>
+                        <input class="u-full-width" type="text" placeholder="merchant name" id="merchant" name="merchant">
                     </div>
-                    <div class="row ">
-                        <label for="amount ">Amount</label>
-                        <input class="u-full-width " type="number " placeholder="amount " id="amount " name="amount ">
+                    <div class="row">
+                        <label for="amount">Amount</label>
+                        <input class="u-full-width" type="number" placeholder="amount" id="amount" name="amount">
                     </div>
-                    <div class="row ">
-                        <div id="formbuttons ">
-                            <input id="cancel-receipt " class="button " type="button " value="Cancel ">
-                            <input id="save-receipt " class="button-primary " type="button " value="Save ">
+                    <div class="row">
+                        <div id="formbuttons">
+                            <input id="cancel-receipt" class="button" type="button" value="Cancel">
+                            <input id="save-receipt" class="button-primary" type="button" value="Save">
                         </div>
                     </div>
                 </form>
             </div>
-            <table class="u-full-width ">
+
+            <table class="u-full-width">
                 <thead>
                     <tr>
                         <th>Time</th>
@@ -76,12 +84,15 @@
                         <th>Tags</th>
                     </tr>
                 </thead>
-                <tbody id="receiptList ">
+                <tbody id="receiptList">
                 </tbody>
             </table>
+
         </div>
-        <div class="one column "></div>
+
+        <div class="one column"></div>
     </div>
+
 </body>
 
 </html>
