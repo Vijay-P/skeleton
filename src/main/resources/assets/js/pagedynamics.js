@@ -1,0 +1,162 @@
+// const api = "http://ec2-54-89-97-105.compute-1.amazonaws.com:8080";
+// const api = "localhost:8080";
+const api = ""
+
+function prepTags(id, tags) {
+    var tagstring = "";
+    for (var i = 0; i < tags.length; i++) {
+        tagstring += `<button receipt_id="${id}" class="tag button"><span class="tagValue">${tags[i]}</span> [x]</button>`;
+    }
+    return tagstring;
+}
+
+function prepReceipt(receipt) {
+    return `<tr class="receipt" id="${receipt.id}">
+    <td class="time">${receipt.created.slice(0, 5)}</td>
+    <td class="merchant">${receipt.merchantName}</td>
+    <td>$<span class="amount">${receipt.value}</span></td>
+    <td class="tags">${prepTags(receipt.id, receipt.tags)}
+        <button receipt_id="${receipt.id}" class="add-tag button-primary .u-pull-right">Add +</button>
+    </td>
+</tr>`;
+}
+
+function loadReceipts() {
+    $("#receiptList").empty();
+    $.getJSON(api + "/receipts", function(receipts) {
+        for (var i = 0; i < receipts.length; i++) {
+            var rectemp = prepReceipt(receipts[i]);
+            $("#receiptList").append(rectemp);
+        }
+    })
+}
+
+function clearHide() {
+    $("#add-form").toggle();
+    $("#merchant").val("");
+    $("#amount").val("");
+}
+
+function putTag(id, tag, element) {
+    $.ajax({
+        url: api + '/tags/' + tag,
+        type: 'PUT',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: id
+    }).done(function(data) {
+        $(element).remove();
+    });
+}
+
+$(document).ready(function() {
+    loadReceipts();
+    $("#add-form").toggle();
+    $("#add-receipt").click(function() {
+        $("#add-form").toggle();
+    });
+    $("#cancel-receipt").click(function() {
+        clearHide();
+    });
+    $("#save-receipt").click(function() {
+        $.ajax({
+            url: api + '/receipts',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                merchant: $("#merchant").val(),
+                amount: parseInt($("#amount").val())
+            })
+        }).done(function(data) {
+            clearHide();
+            loadReceipts();
+        });
+    });
+    $(document).on("click", '.tag', function(event) {
+        var tagname = $(this).text().slice(0, -4);
+        putTag($(this).attr("receipt_id"), tagname, this);
+    });
+    $(document).on("click", '.add-tag', function(event) {
+        $(this).prop("disabled", true);
+        var id = $(this).attr("receipt_id");
+        var input = `<input receipt_id=${id} class="tag_input" type="text" placeholder="tag" name="tag">`;
+        $(this).parent().append(input);
+    });
+    $(document).on('keyup', ".tag_input", function(e) {
+        if (e.keyCode == 13) {
+            var id = $(this).attr("receipt_id");
+            var tag = $(this).val();
+            putTag(id, tag, this);
+            var tagstring = `<button receipt_id="${id}" class="tag button"><span class="tagValue">${tag}</span> [x]</button>`;
+            $(this).parent().append(tagstring);
+            $(this).parent().children(".add-tag").prop("disabled", false);
+        }
+    });
+});
+
+let imageCapture;
+let track;
+
+function attachMediaStream(mediaStream) {
+    $('video')[0].srcObject = mediaStream;
+
+    // Saving the track allows us to capture a photo
+    track = mediaStream.getVideoTracks()[0];
+    imageCapture = new ImageCapture(track);
+}
+
+function startVideo() {
+    navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: {
+                    exact: "environment"
+                }
+            }
+        })
+        .then(attachMediaStream)
+        .catch(error => {
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then(attachMediaStream)
+                .catch(error => {
+                    console.log('you are fooked');
+                })
+        })
+}
+
+function takeSnapshot() {
+    // create a CANVAS element that is same size as the image
+    imageCapture.grabFrame()
+        .then(img => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            canvas.getContext('2d').drawImage(img, 0, 0);
+            const base64EncodedImageData = canvas.toDataURL('image/png').split(',')[1];
+            $.ajax({
+                    url: "/images",
+                    type: "POST",
+                    data: base64EncodedImageData,
+                    contentType: "text/plain",
+                    success: function() {},
+                })
+                .then(response => {
+                    $('video').after(`<div>got response: <pre>${JSON.stringify(response)}</pre></div>`);
+                })
+                .always(() => console.log('request complete'));
+
+            // For debugging, you can uncomment this to see the frame that was captured
+            $('BODY').append(canvas);
+        });
+
+}
+
+
+$(function() {
+    $('#start').on('click', startVideo);
+    $('video').on('play', () => $('#snapshot').prop('disabled', false));
+    $('#snapshot').on('click', takeSnapshot);
+});

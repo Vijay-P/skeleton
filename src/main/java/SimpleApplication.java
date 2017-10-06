@@ -10,6 +10,13 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultConfiguration;
 
 public class SimpleApplication extends Application<Configuration> {
+
+        /* Add static asset bundle*/
+    @Override
+    public void initialize(Bootstrap<Configuration> bootstrap) {
+        bootstrap.addBundle(new AssetsBundle());
+    }
+
     public static void main(String[] args) throws Exception {
         new SimpleApplication().run(args);
     }

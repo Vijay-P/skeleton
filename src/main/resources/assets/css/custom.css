@@ -1,0 +1,35 @@
+#rectitle {
+        display: inline-block;
+    }
+
+#start,
+#add-receipt {
+    margin-top: 3px;
+    display: inline-block;
+}
+
+#appheader {
+    display: inline;
+}
+
+#formbuttons {
+    float: right;
+}
+
+.tag .add-tag {
+    margin: 0px;
+    display: inline-block;
+}
+
+.tags {
+    max-width: 50%
+}
+video {
+    width: 550px;
+    height: 450px;
+    border: 1px solid black;
+}
+
+#vidwrap {
+    margin: 20px 0;
+}
